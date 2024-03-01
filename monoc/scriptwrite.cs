@@ -58,6 +58,12 @@ namespace monoc
                 }
             }
 
+            foreach (Match m in stringMatches)
+            {
+                codeRichTextBox.SelectionStart = m.Index;
+                codeRichTextBox.SelectionLength = m.Length;
+                codeRichTextBox.SelectionColor = Color.Brown;
+            }
 
             foreach (Match m in commentMatches)
             {
