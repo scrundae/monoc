@@ -1,1 +1,0 @@
-monoc:println("Hello")
