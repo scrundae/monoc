@@ -16,6 +16,7 @@ namespace monoc
     {
         //Dont even know how tf this worked but it did
         public static List<string> keywords = new List<string> { };
+        public static List<string> objects = new List<string> { };
         public scriptwrite()
         {
             InitializeComponent();

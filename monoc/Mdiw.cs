@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using NLua;
+using Microsoft.VisualBasic;
 
 namespace monoc
 {
@@ -19,6 +20,7 @@ namespace monoc
     {
         public static Lua lua = new Lua();
         bool plugins = true;
+        public List<string> ScriptObjects = new List<string> ();
         public Mdiw(string[] args)
         {
            
@@ -152,7 +154,7 @@ namespace monoc
 
         private void addToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            
+            //ScriptObjects.Add(toolStripTextBox1.Text);
         }
 
         private void setToolStripMenuItem_Click(object sender, EventArgs e)
@@ -175,7 +177,145 @@ namespace monoc
             PrintDialog pd = new PrintDialog();
             pd.ShowDialog();
         }
+
+        private void disambiguationPanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string value = Interaction.InputBox("Please enter your code:", "Disambiguation Client", "");
+            List<string> keywordsAndObjects = new List<string>();
+
+            // Add keywords
+            foreach (string keyword in scriptwrite.keywords)
+            {
+                string modKeyword = keyword.Replace("\\b(", "").Replace(")\\b", "");
+                keywordsAndObjects.Add(modKeyword);
+            }
+
+            // Add objects
+            foreach (string obj in scriptwrite.objects)
+            {
+                string modObj = obj.Replace("\\b(", "").Replace(")\\b", "");
+                keywordsAndObjects.Add(modObj);
+            }
+
+            string closestMatch = FindClosestMatch(value, keywordsAndObjects);
+            if (closestMatch.Length > 0)
+            {
+                DialogResult result = MessageBox.Show("The closest match was: " + closestMatch + "\nCopy to clipboard?\n\nYES = Copy to clipboard\nNO = Show next result\nCANCEL = Neither", "Disambiguation Client", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    Clipboard.SetText(closestMatch);
+                }
+                else if (result == DialogResult.No)
+                {
+                    // Handle showing next result
+                }
+                else
+                {
+                    // Handle other actions
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not find a close match... somehow...", "Disambiguation Client: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        static string FindClosestMatch(string searchTerm, List<string> strings)
+        {
+            string closestMatch = null;
+            int minDistance = int.MaxValue;
+
+            foreach (string str in strings)
+            {
+                int distance = ComputeLevenshteinDistance(searchTerm, str);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestMatch = str;
+                }
+            }
+
+            return closestMatch;
+        }
+
+        static int ComputeLevenshteinDistance(string s, string t)
+        {
+            int[,] d = new int[s.Length + 1, t.Length + 1];
+
+            for (int i = 0; i <= s.Length; i++)
+                d[i, 0] = i;
+
+            for (int j = 0; j <= t.Length; j++)
+                d[0, j] = j;
+
+            for (int j = 1; j <= t.Length; j++)
+            {
+                for (int i = 1; i <= s.Length; i++)
+                {
+                    int cost = (s[i - 1] == t[j - 1]) ? 0 : 1;
+
+                    d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
+                }
+            }
+
+            return d[s.Length, t.Length];
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addToListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scriptwrite.keywords.Add("\\b(" + toolStripTextBox1.Text + ")\\b");
+        }
+
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.ShowDialog();
+            File.WriteAllLines(sfd.FileName, scriptwrite.keywords);
+        }
+        static List<string> GetClassNamesFromDll(string dllPath)
+        {
+            List<string> classNames = new List<string>();
+
+            try
+            {
+                Assembly assembly = Assembly.LoadFrom(dllPath);
+                Type[] types = assembly.GetTypes();
+
+                foreach (Type type in types)
+                {
+                    // Check if the type is a class and not abstract
+                    if (type.IsClass && !type.IsAbstract)
+                    {
+                        classNames.Add(type.FullName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
+            return classNames;
+        }
+
+        private void addReferenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Select the dynamic link library...";
+            ofd.ShowDialog();
+            List<string> list = GetClassNamesFromDll(ofd.FileName);
+            foreach (string s in list)
+            {
+                scriptwrite.objects.Add(s);
+            }
+        }
     }
+}
     public class LuaBridge
     {
         public static Form mainForm;
@@ -231,4 +371,3 @@ namespace monoc
             }
         }
     }
-}
