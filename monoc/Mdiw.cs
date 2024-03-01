@@ -21,8 +21,7 @@ namespace monoc
         bool plugins = true;
         public Mdiw(string[] args)
         {
-            
-            LuaBridge.mainForm = this;
+           
             Console.WriteLine("Booting into MONOC!");
             InitializeComponent();
             foreach (string arg in args)
@@ -48,6 +47,8 @@ namespace monoc
             lua.RegisterFunction("makemodal", null, typeof(MessageBox).GetMethod("Show", new Type[] { typeof(string), typeof(string) }));
             //lua.RegisterFunction("println", null, typeof(LuaBridge).GetMethod("println"));
             LuaBridge luaBridge = new LuaBridge();
+            LuaBridge.mainForm = this;
+            luaBridge.Init();
             lua["monoc"] = luaBridge;
             Startup stu = new Startup();
             stu.MdiParent = this;
@@ -167,6 +168,27 @@ namespace monoc
     public class LuaBridge
     {
         public static Form mainForm;
+        public string CurrentDocumentText;
+        Timer timer = new Timer();
+        public void Init()
+        {
+            timer.Enabled = true;
+            timer.Interval = 1;
+            timer.Start();
+            timer.Tick += Timer_Tick;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            foreach (Control control in mainForm.ActiveMdiChild.Controls)
+            {
+                if (control is RichTextBox rtf)
+                {
+                    CurrentDocumentText = rtf.Text;
+                }
+            }
+        }
+
         public void println(string line)
         {
             foreach(Control tb in mainForm.ActiveMdiChild.Controls)
