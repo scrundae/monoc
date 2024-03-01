@@ -1,8 +1,14 @@
 <body>
-    <center>
         <h1>monoc</h1>
         <p>The <i>moddable </i>text editor for <b><i><u>you</u></i></b></p>
-    </center>
+    <hr>
+    <h3>Features</h3>
+    <ul>
+        <li>Syntax Highlighting</li>
+        <li>Multiple Document Interface</li>
+        <li>Plugin Support using the Lua Programming Language</li>
+        <li>Open Source</li>
+    </ul>
     <hr>
     <h3>Modding using Lua</h3>
     <p>Did you know that MONOC has extensibility and automation support using the Lua programming language?</p>
