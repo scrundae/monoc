@@ -4,11 +4,6 @@
         <p>The <i>moddable </i>text editor for <b><i><u>you</u></i></b></p>
     </center>
     <hr>
-    <h3>Where to go?</h3>
-    <a href="ncd">Start a new file</a><br>
-    <a href="led">Load an existing file</a><br>
-    <a href="ctw">Continue without code</a>
-    <hr>
     <h3>Modding using Lua</h3>
     <p>Did you know that MONOC has extensibility and automation support using the Lua programming language?</p>
     <p>Here's an example of a Lua script for MONOC</p>
