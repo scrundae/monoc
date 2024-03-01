@@ -56,6 +56,8 @@
             this.fullscreenModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.falseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.luaConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addReferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keywordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setToLangFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,7 +81,6 @@
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addReferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -273,7 +274,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewportToolStripMenuItem});
+            this.viewportToolStripMenuItem,
+            this.luaConsoleToolStripMenuItem});
             this.optionsToolStripMenuItem.Image = global::monoc.Properties.Resources.cog;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
@@ -285,7 +287,7 @@
             this.fullscreenModeToolStripMenuItem});
             this.viewportToolStripMenuItem.Image = global::monoc.Properties.Resources.camera;
             this.viewportToolStripMenuItem.Name = "viewportToolStripMenuItem";
-            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.viewportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.viewportToolStripMenuItem.Text = "Viewport";
             // 
             // fullscreenModeToolStripMenuItem
@@ -314,6 +316,23 @@
             this.falseToolStripMenuItem.Text = "False";
             this.falseToolStripMenuItem.Click += new System.EventHandler(this.windowedToolStripMenuItem_Click);
             // 
+            // luaConsoleToolStripMenuItem
+            // 
+            this.luaConsoleToolStripMenuItem.Name = "luaConsoleToolStripMenuItem";
+            this.luaConsoleToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.X)));
+            this.luaConsoleToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.luaConsoleToolStripMenuItem.Text = "LuaConsole";
+            this.luaConsoleToolStripMenuItem.Click += new System.EventHandler(this.luaConsoleToolStripMenuItem_Click);
+            // 
+            // addReferenceToolStripMenuItem
+            // 
+            this.addReferenceToolStripMenuItem.Name = "addReferenceToolStripMenuItem";
+            this.addReferenceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addReferenceToolStripMenuItem.Text = "Add Reference";
+            this.addReferenceToolStripMenuItem.Visible = false;
+            this.addReferenceToolStripMenuItem.Click += new System.EventHandler(this.addReferenceToolStripMenuItem_Click);
+            // 
             // modsToolStripMenuItem
             // 
             this.modsToolStripMenuItem.Name = "modsToolStripMenuItem";
@@ -341,7 +360,7 @@
             this.setToolStripMenuItem});
             this.setToLangFileToolStripMenuItem.Image = global::monoc.Properties.Resources.text_replace;
             this.setToLangFileToolStripMenuItem.Name = "setToLangFileToolStripMenuItem";
-            this.setToLangFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setToLangFileToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.setToLangFileToolStripMenuItem.Text = "Set to LangFile";
             // 
             // howToolStripMenuItem
@@ -401,7 +420,7 @@
             this.toolStripSeparator6,
             this.addToListToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.addToolStripMenuItem.Text = "Add";
             // 
             // keywordConfigurationToolStripMenuItem
@@ -431,7 +450,7 @@
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
@@ -479,13 +498,6 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // addReferenceToolStripMenuItem
-            // 
-            this.addReferenceToolStripMenuItem.Name = "addReferenceToolStripMenuItem";
-            this.addReferenceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addReferenceToolStripMenuItem.Text = "Add Reference";
-            this.addReferenceToolStripMenuItem.Click += new System.EventHandler(this.addReferenceToolStripMenuItem_Click);
             // 
             // Mdiw
             // 
@@ -559,6 +571,7 @@
         private System.Windows.Forms.ToolStripMenuItem addToListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem addReferenceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem luaConsoleToolStripMenuItem;
     }
 }
 

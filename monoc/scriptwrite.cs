@@ -87,7 +87,7 @@ namespace monoc
 
         private void scriptwrite_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }
