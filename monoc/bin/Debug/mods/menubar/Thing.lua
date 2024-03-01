@@ -1,1 +1,1 @@
-monoc:print("\nHello\nHello")
+monoc:disambiguate(monoc.CurrentDocumentText)

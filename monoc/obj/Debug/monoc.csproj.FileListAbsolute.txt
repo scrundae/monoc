@@ -30,3 +30,4 @@ C:\Users\scrundaegames\source\repos\monoc\monoc\bin\Debug\Microsoft.Web.WebView2
 C:\Users\scrundaegames\source\repos\monoc\monoc\bin\Debug\Microsoft.Web.WebView2.Core.xml
 C:\Users\scrundaegames\source\repos\monoc\monoc\bin\Debug\Microsoft.Web.WebView2.WinForms.xml
 C:\Users\scrundaegames\source\repos\monoc\monoc\bin\Debug\Microsoft.Web.WebView2.Wpf.xml
+C:\Users\scrundaegames\source\repos\monoc\monoc\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll

@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using NLua;
 using Microsoft.VisualBasic;
+using monoc;
 
 namespace monoc
 {
@@ -50,7 +51,7 @@ namespace monoc
             //lua.RegisterFunction("println", null, typeof(LuaBridge).GetMethod("println"));
             LuaBridge luaBridge = new LuaBridge();
             LuaBridge.mainForm = this;
-            //luaBridge.Init();
+            luaBridge.Init();
             lua["monoc"] = luaBridge;
             Startup stu = new Startup();
             stu.MdiParent = this;
@@ -220,7 +221,7 @@ namespace monoc
             }
         }
 
-        static string FindClosestMatch(string searchTerm, List<string> strings)
+        public static string FindClosestMatch(string searchTerm, List<string> strings)
         {
             string closestMatch = null;
             int minDistance = int.MaxValue;
@@ -277,9 +278,9 @@ namespace monoc
             sfd.ShowDialog();
             File.WriteAllLines(sfd.FileName, scriptwrite.keywords);
         }
-        static List<string> GetClassNamesFromDll(string dllPath)
+        static List<string> GetTypeNamesFromDll(string dllPath)
         {
-            List<string> classNames = new List<string>();
+            List<string> typeNames = new List<string>();
 
             try
             {
@@ -288,11 +289,15 @@ namespace monoc
 
                 foreach (Type type in types)
                 {
-                    // Check if the type is a class and not abstract
-                    if (type.IsClass && !type.IsAbstract)
-                    {
-                        classNames.Add(type.FullName);
-                    }
+                    typeNames.Add(type.FullName);
+                }
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                Console.WriteLine("Error loading types from the DLL:");
+                foreach (Exception loaderException in ex.LoaderExceptions)
+                {
+                    Console.WriteLine(loaderException.Message);
                 }
             }
             catch (Exception ex)
@@ -300,7 +305,7 @@ namespace monoc
                 Console.WriteLine("Error: " + ex.Message);
             }
 
-            return classNames;
+            return typeNames;
         }
 
         private void addReferenceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -308,19 +313,26 @@ namespace monoc
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Select the dynamic link library...";
             ofd.ShowDialog();
-            List<string> list = GetClassNamesFromDll(ofd.FileName);
+            List<string> list = GetTypeNamesFromDll(ofd.FileName);
             foreach (string s in list)
             {
+                Console.WriteLine(s);
                 scriptwrite.objects.Add(s);
             }
         }
+
+        private void luaConsoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string com = Interaction.InputBox("Lua Command:", "LuaConsole", "monoc:");
+            lua.DoString(com);
+        }
+
     }
-}
     public class LuaBridge
     {
         public static Form mainForm;
         public string CurrentDocumentText;
-        Timer timer;
+        Timer timer = new Timer();
         public void Init()
         {
             timer.Enabled = true;
@@ -342,12 +354,52 @@ namespace monoc
 
         public void println(string line)
         {
-            foreach(Control tb in mainForm.ActiveMdiChild.Controls)
+            foreach (Control tb in mainForm.ActiveMdiChild.Controls)
             {
                 if (tb is RichTextBox richTextBox)
                 {
                     richTextBox.AppendText("\n" + line + "\n");
                 }
+            }
+        }
+        public void disambiguate(string value)
+        {
+            List<string> keywordsAndObjects = new List<string>();
+
+            // Add keywords
+            foreach (string keyword in scriptwrite.keywords)
+            {
+                string modKeyword = keyword.Replace("\\b(", "").Replace(")\\b", "");
+                keywordsAndObjects.Add(modKeyword);
+            }
+
+            // Add objects
+            foreach (string obj in scriptwrite.objects)
+            {
+                string modObj = obj.Replace("\\b(", "").Replace(")\\b", "");
+                keywordsAndObjects.Add(modObj);
+            }
+
+            string closestMatch = Mdiw.FindClosestMatch(value, keywordsAndObjects);
+            if (closestMatch.Length > 0)
+            {
+                DialogResult result = MessageBox.Show("The closest match was: " + closestMatch + "\nCopy to clipboard?\n\nYES = Copy to clipboard\nNO = Show next result\nCANCEL = Neither", "Disambiguation Client", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    Clipboard.SetText(closestMatch);
+                }
+                else if (result == DialogResult.No)
+                {
+                    // Handle showing next result
+                }
+                else
+                {
+                    // Handle other actions
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not find a close match... somehow...", "Disambiguation Client: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         public void print(string line)
@@ -370,4 +422,15 @@ namespace monoc
                 }
             }
         }
+        public void setlang(string lang)
+        {
+            scriptwrite.keywords.Clear();
+            string[] keywrds = File.ReadAllLines(Application.StartupPath + "/lang/" + lang + ".LangFile");
+            foreach (string keywrd in keywrds)
+            {
+                scriptwrite.keywords.Add(keywrd);
+            }
+        }
     }
+}
+    
