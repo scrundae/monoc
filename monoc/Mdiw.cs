@@ -48,7 +48,7 @@ namespace monoc
             //lua.RegisterFunction("println", null, typeof(LuaBridge).GetMethod("println"));
             LuaBridge luaBridge = new LuaBridge();
             LuaBridge.mainForm = this;
-            luaBridge.Init();
+            //luaBridge.Init();
             lua["monoc"] = luaBridge;
             Startup stu = new Startup();
             stu.MdiParent = this;
@@ -164,12 +164,23 @@ namespace monoc
                 scriptwrite.keywords.Add(keywrd);
             }
         }
+
+        private void printPreviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintDialog pd = new PrintDialog();
+            pd.ShowDialog();
+        }
     }
     public class LuaBridge
     {
         public static Form mainForm;
         public string CurrentDocumentText;
-        Timer timer = new Timer();
+        Timer timer;
         public void Init()
         {
             timer.Enabled = true;
@@ -195,7 +206,7 @@ namespace monoc
             {
                 if (tb is RichTextBox richTextBox)
                 {
-                    richTextBox.AppendText(line + "\n");
+                    richTextBox.AppendText("\n" + line + "\n");
                 }
             }
         }
@@ -206,6 +217,16 @@ namespace monoc
                 if (tb is RichTextBox richTextBox)
                 {
                     richTextBox.AppendText(line);
+                }
+            }
+        }
+        public void clear()
+        {
+            foreach (Control tb in mainForm.ActiveMdiChild.Controls)
+            {
+                if (tb is RichTextBox richTextBox)
+                {
+                    richTextBox.Text = "";
                 }
             }
         }

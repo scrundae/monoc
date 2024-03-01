@@ -1,0 +1,1 @@
+monoc:print("\nHello\nHello")

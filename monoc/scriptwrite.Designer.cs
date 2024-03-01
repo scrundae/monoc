@@ -31,11 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(scriptwrite));
             this.codeRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.TitleLabel = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TitleLabel = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,6 +44,7 @@
             this.codeRichTextBox.AcceptsTab = true;
             this.codeRichTextBox.BackColor = System.Drawing.Color.White;
             this.codeRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.codeRichTextBox.BulletIndent = 1;
             this.codeRichTextBox.ContextMenuStrip = this.contextMenuStrip1;
             this.codeRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.codeRichTextBox.Font = new System.Drawing.Font("Lucida Console", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -53,15 +54,8 @@
             this.codeRichTextBox.Size = new System.Drawing.Size(800, 450);
             this.codeRichTextBox.TabIndex = 0;
             this.codeRichTextBox.Text = "Document";
+            this.codeRichTextBox.WordWrap = false;
             this.codeRichTextBox.TextChanged += new System.EventHandler(this.codeRichTextBox_TextChanged);
-            // 
-            // TitleLabel
-            // 
-            this.TitleLabel.AutoSize = true;
-            this.TitleLabel.Location = new System.Drawing.Point(788, 428);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(0, 13);
-            this.TitleLabel.TabIndex = 1;
             // 
             // contextMenuStrip1
             // 
@@ -93,6 +87,14 @@
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
+            // 
+            // TitleLabel
+            // 
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.Location = new System.Drawing.Point(788, 428);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(0, 13);
+            this.TitleLabel.TabIndex = 1;
             // 
             // scriptwrite
             // 
