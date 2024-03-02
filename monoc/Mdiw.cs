@@ -201,7 +201,7 @@ namespace monoc
             string closestMatch = FindClosestMatch(value, keywordsAndObjects);
             if (closestMatch.Length > 0)
             {
-                DialogResult result = MessageBox.Show("The closest match was: " + closestMatch + "\nCopy to clipboard?\n\nYES = Copy to clipboard\nNO = Show next result\nCANCEL = Neither", "Disambiguation Client", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                DialogResult result = MessageBox.Show("The closest match was: " + closestMatch + "\nCopy to clipboard?\n\nYES = Copy to clipboard\nNO = Move on", "Disambiguation Client", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
                 {
                     Clipboard.SetText(closestMatch);
