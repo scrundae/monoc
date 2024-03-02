@@ -343,22 +343,28 @@ namespace monoc
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            foreach (Control control in mainForm.ActiveMdiChild.Controls)
+            if (mainForm.ActiveMdiChild != null)
             {
-                if (control is RichTextBox rtf)
+                foreach (Control control in mainForm.ActiveMdiChild.Controls)
                 {
-                    CurrentDocumentText = rtf.Text;
+                    if (control is RichTextBox rtf)
+                    {
+                        CurrentDocumentText = rtf.Text;
+                    }
                 }
             }
         }
 
         public void println(string line)
         {
-            foreach (Control tb in mainForm.ActiveMdiChild.Controls)
+            if (mainForm.ActiveMdiChild != null)
             {
-                if (tb is RichTextBox richTextBox)
+                foreach (Control tb in mainForm.ActiveMdiChild.Controls)
                 {
-                    richTextBox.AppendText("\n" + line);
+                    if (tb is RichTextBox richTextBox)
+                    {
+                        richTextBox.AppendText("\n" + line);
+                    }
                 }
             }
         }
@@ -383,7 +389,7 @@ namespace monoc
             string closestMatch = Mdiw.FindClosestMatch(value, keywordsAndObjects);
             if (closestMatch.Length > 0)
             {
-                DialogResult result = MessageBox.Show("The closest match was: " + closestMatch + "\nCopy to clipboard?\n\nYES = Copy to clipboard\nNO = Show next result\nCANCEL = Neither", "Disambiguation Client", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                DialogResult result = MessageBox.Show("The closest match was: " + closestMatch + "\nCopy to clipboard?\n\nYES = Copy to clipboard\nNO = Move on", "Disambiguation Client", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
                 {
                     Clipboard.SetText(closestMatch);
@@ -404,11 +410,14 @@ namespace monoc
         }
         public void print(string line)
         {
-            foreach (Control tb in mainForm.ActiveMdiChild.Controls)
+            if (mainForm.ActiveMdiChild != null)
             {
-                if (tb is RichTextBox richTextBox)
+                foreach (Control tb in mainForm.ActiveMdiChild.Controls)
                 {
-                    richTextBox.AppendText(line);
+                    if (tb is RichTextBox richTextBox)
+                    {
+                        richTextBox.AppendText(line);
+                    }
                 }
             }
         }

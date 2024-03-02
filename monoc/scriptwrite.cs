@@ -89,5 +89,16 @@ namespace monoc
         {
             
         }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(codeRichTextBox.SelectedText);
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(codeRichTextBox.SelectedText);
+            codeRichTextBox.SelectedText = String.Empty;
+        }
     }
 }
