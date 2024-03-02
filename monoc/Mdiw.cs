@@ -422,6 +422,7 @@ namespace monoc
                 }
             }
         }
+
         public void setlang(string lang)
         {
             scriptwrite.keywords.Clear();
@@ -430,14 +431,6 @@ namespace monoc
             {
                 scriptwrite.keywords.Add(keywrd);
             }
-        }
-        //not sure why this doesnt work
-        //please god save me
-        //"everything is up to date" WELL ITS NOT EXACTLY PUSHING IS IT?
-        private Lua lua = new Lua();
-        public void runplugin(string plugin)
-        {
-            lua.DoFile("mods/menubar/" + plugin);
         }
     }
 }
