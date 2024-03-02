@@ -35,4 +35,5 @@
     <p>The app is coded in .NET, with bits of HTML and Lua scattered in the mix.</p>
     <p>With your help, we can fix the stupid problems with this app, and make it an awesome text editor!</p>
     <hr>
-        <p>You have reached the bottom of the page. Thanks for reading!</p>
+	<h3>Small warning for self-builders</h3>
+	<p>Please copy the files from the PLACE INTO DEBUG etc. folder into your folder when building, or the build will fail.</p>
