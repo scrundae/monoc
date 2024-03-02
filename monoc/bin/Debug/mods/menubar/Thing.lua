@@ -1,1 +1,0 @@
-monoc:disambiguate(monoc.CurrentDocumentText)

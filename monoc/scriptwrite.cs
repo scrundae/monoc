@@ -31,7 +31,7 @@ namespace monoc
             MatchCollection commentMatches = Regex.Matches(codeRichTextBox.Text, comments, RegexOptions.Multiline);
 
             // getting strings
-            string strings = "\".+?\"";
+            string strings = "\".+?\"|'.+?'";
             MatchCollection stringMatches = Regex.Matches(codeRichTextBox.Text, strings);
 
             // saving the original caret position + forecolor
