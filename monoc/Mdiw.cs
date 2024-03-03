@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -101,6 +102,11 @@ namespace monoc
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            createNewFile();
+        }
+
+        private void createNewFile()
         {
             scriptwrite sw = new scriptwrite();
             sw.MdiParent = this;
@@ -327,6 +333,64 @@ namespace monoc
             lua.DoString(com);
         }
 
+        private void buildRunToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string appToRun = Interaction.InputBox("Type in the path of the app to run.", "Build/Run");
+            string argsToRun = Interaction.InputBox("Type in the argument(s) for the app to start with.", "Build/Run");
+            Process process = new Process();
+            process.StartInfo.FileName = appToRun;
+            process.StartInfo.Arguments = argsToRun;
+            process.Start();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Cut()
+        {
+            
+        }
+
+        private void Copy()
+        {
+            
+        }
+
+        private void Paste()
+        {
+            
+        }
+
+        private void helpToolStripButton_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void newToolStripButton_Click(object sender, EventArgs e)
+        {
+            createNewFile();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            Startup stu = new Startup();
+            stu.MdiParent = this;
+            stu.WindowState = FormWindowState.Maximized;
+            stu.Show();
+        }
     }
     public class LuaBridge
     {
