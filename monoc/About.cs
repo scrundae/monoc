@@ -19,7 +19,37 @@ namespace monoc
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            //this.textBoxDescription.Text = AssemblyDescription;
+            Random rand = new Random();
+            int ans = rand.Next(1, 7);
+            if (ans == 1)
+            {
+                this.textBoxDescription.Text = "Well, you know what they say! I don't, though. Could you please tell me?. --Licensed with the MIT license.";
+            }
+            else if (ans == 2)
+            {
+                this.textBoxDescription.Text = "Frankenstein's editor. --Licensed with the MIT license.";
+            }
+            else if (ans == 3)
+            {
+                this.textBoxDescription.Text = "#MONOCMONDAYS #SUICIDESATURDAYS... I mean what?";
+            }
+            else if (ans == 4)
+            {
+                this.textBoxDescription.Text = "Well, you know what they say! I don't, though. Could you please tell me?\nLicensed with the MIT license.";
+            }
+            else if (ans == 5)
+            {
+                this.textBoxDescription.Text = "Well, you know what they say! I don't, though. Could you please tell me?\nLicensed with the MIT license.";
+            }
+            else if (ans == 6)
+            {
+                this.textBoxDescription.Text = "Well, you know what they say! I don't, though. Could you please tell me?\nLicensed with the MIT license.";
+            }
+            else
+            {
+                this.textBoxDescription.Text = "How are you reading this?";
+            }
         }
 
         #region Assembly Attribute Accessors

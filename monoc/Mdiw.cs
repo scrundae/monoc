@@ -25,9 +25,10 @@ namespace monoc
         public List<string> ScriptObjects = new List<string> ();
         public Mdiw(string[] args)
         {
-           
+            
             Console.WriteLine("Booting into MONOC!");
             InitializeComponent();
+            LuaBridge.mainForm = this;
             foreach (string arg in args)
             {
                 if (arg == "-plugins")
@@ -51,7 +52,7 @@ namespace monoc
             lua.RegisterFunction("makemodal", null, typeof(MessageBox).GetMethod("Show", new Type[] { typeof(string), typeof(string) }));
             //lua.RegisterFunction("println", null, typeof(LuaBridge).GetMethod("println"));
             LuaBridge luaBridge = new LuaBridge();
-            LuaBridge.mainForm = this;
+            
             luaBridge.Init();
             lua["monoc"] = luaBridge;
             Startup stu = new Startup();
@@ -124,8 +125,8 @@ namespace monoc
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            About abt = new About();
-            abt.ShowDialog();
+            book about = new monoc.book();
+            about.ShowDialog();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
@@ -375,7 +376,7 @@ namespace monoc
 
         private void helpToolStripButton_Click(object sender, EventArgs e)
         {
-            About about = new About();
+            book about = new book();
             about.ShowDialog();
         }
 
@@ -503,6 +504,32 @@ namespace monoc
             foreach (string keywrd in keywrds)
             {
                 scriptwrite.keywords.Add(keywrd);
+            }
+        }
+        
+        public class tools
+        {
+            public class options
+            {
+                public class viewport
+                {
+                    public void SetFullscreen(bool yon)
+                    {
+                        if (yon)
+                        {
+                            mainForm.WindowState = FormWindowState.Normal;
+                            mainForm.FormBorderStyle = FormBorderStyle.None;
+                            mainForm.TopMost = true;
+                            mainForm.WindowState = FormWindowState.Maximized;
+                        }
+                        else
+                        {
+                            mainForm.WindowState = FormWindowState.Normal;
+                            mainForm.FormBorderStyle = FormBorderStyle.Sizable;
+                            mainForm.TopMost = false;
+                        }
+                    }
+                }
             }
         }
     }

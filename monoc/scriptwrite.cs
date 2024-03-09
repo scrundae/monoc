@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,66 +24,74 @@ namespace monoc
         }
 
         private void codeRichTextBox_TextChanged(object sender, EventArgs e)
+{
+    // getting comments (inline or multiline)
+    string comments = @"(//|--|#)" + ".+?$";
+    MatchCollection commentMatches = Regex.Matches(codeRichTextBox.Text, comments, RegexOptions.Multiline);
+
+    // getting strings
+    string strings = "\".+?\"|'.+?'";
+    MatchCollection stringMatches = Regex.Matches(codeRichTextBox.Text, strings);
+
+    // getting integers
+    string integers = @"\b\d+\b";
+    MatchCollection integerMatches = Regex.Matches(codeRichTextBox.Text, integers);
+
+    // saving the original caret position + forecolor
+    int originalIndex = codeRichTextBox.SelectionStart;
+    int originalLength = codeRichTextBox.SelectionLength;
+    Color originalColor = Color.Black;
+
+    // MANDATORY - focuses a label before highlighting (avoids blinking)
+    TitleLabel.Focus();
+
+    // removes any previous highlighting (so modified words won't remain highlighted)
+    codeRichTextBox.SelectionStart = 0;
+    codeRichTextBox.SelectionLength = codeRichTextBox.Text.Length;
+    codeRichTextBox.SelectionColor = originalColor;
+
+    // scanning keywords...
+    foreach (string keyword in keywords)
+    {
+        MatchCollection keywordMatches = Regex.Matches(codeRichTextBox.Text, keyword);
+        foreach (Match m in keywordMatches)
         {
-            
-
-            // getting comments (inline or multiline)
-            string comments = @"(//|--|#)" + ".+?$";
-            MatchCollection commentMatches = Regex.Matches(codeRichTextBox.Text, comments, RegexOptions.Multiline);
-
-            // getting strings
-            string strings = "\".+?\"|'.+?'";
-            MatchCollection stringMatches = Regex.Matches(codeRichTextBox.Text, strings);
-
-            // saving the original caret position + forecolor
-            int originalIndex = codeRichTextBox.SelectionStart;
-            int originalLength = codeRichTextBox.SelectionLength;
-            Color originalColor = Color.Black;
-
-            // MANDATORY - focuses a label before highlighting (avoids blinking)
-            TitleLabel.Focus();
-
-            // removes any previous highlighting (so modified words won't remain highlighted)
-            codeRichTextBox.SelectionStart = 0;
-            codeRichTextBox.SelectionLength = codeRichTextBox.Text.Length;
-            codeRichTextBox.SelectionColor = originalColor;
-
-            // scanning keywords...
-            foreach (string keyword in keywords)
-            {
-                MatchCollection keywordMatches = Regex.Matches(codeRichTextBox.Text, keyword);
-                foreach (Match m in keywordMatches)
-                {
-                    codeRichTextBox.SelectionStart = m.Index;
-                    codeRichTextBox.SelectionLength = m.Length;
-                    codeRichTextBox.SelectionColor = Color.Blue;
-                }
-            }
-
-            foreach (Match m in stringMatches)
-            {
-                codeRichTextBox.SelectionStart = m.Index;
-                codeRichTextBox.SelectionLength = m.Length;
-                codeRichTextBox.SelectionColor = Color.Brown;
-            }
-
-            foreach (Match m in commentMatches)
-            {
-                codeRichTextBox.SelectionStart = m.Index;
-                codeRichTextBox.SelectionLength = m.Length;
-                codeRichTextBox.SelectionColor = Color.Green;
-            }
-
-            
-
-            // restoring the original colors, for further writing
-            codeRichTextBox.SelectionStart = originalIndex;
-            codeRichTextBox.SelectionLength = originalLength;
-            codeRichTextBox.SelectionColor = originalColor;
-
-            // giving back the focus
-            codeRichTextBox.Focus();
+            codeRichTextBox.SelectionStart = m.Index;
+            codeRichTextBox.SelectionLength = m.Length;
+            codeRichTextBox.SelectionColor = Color.Blue;
         }
+    }
+
+    foreach (Match m in stringMatches)
+    {
+        codeRichTextBox.SelectionStart = m.Index;
+        codeRichTextBox.SelectionLength = m.Length;
+        codeRichTextBox.SelectionColor = Color.Brown;
+    }
+
+    foreach (Match m in commentMatches)
+    {
+        codeRichTextBox.SelectionStart = m.Index;
+        codeRichTextBox.SelectionLength = m.Length;
+        codeRichTextBox.SelectionColor = Color.Green;
+    }
+
+    foreach (Match m in integerMatches)
+    {
+        codeRichTextBox.SelectionStart = m.Index;
+        codeRichTextBox.SelectionLength = m.Length;
+        codeRichTextBox.SelectionColor = Color.Orange;
+    }
+
+    // restoring the original colors, for further writing
+    codeRichTextBox.SelectionStart = originalIndex;
+    codeRichTextBox.SelectionLength = originalLength;
+    codeRichTextBox.SelectionColor = originalColor;
+
+    // giving back the focus
+    codeRichTextBox.Focus();
+}
+
 
 
         private void scriptwrite_Load(object sender, EventArgs e)

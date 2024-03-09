@@ -47,7 +47,7 @@
             this.codeRichTextBox.BulletIndent = 1;
             this.codeRichTextBox.ContextMenuStrip = this.contextMenuStrip1;
             this.codeRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.codeRichTextBox.Font = new System.Drawing.Font("Lucida Console", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.codeRichTextBox.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.codeRichTextBox.ForeColor = System.Drawing.Color.Black;
             this.codeRichTextBox.Location = new System.Drawing.Point(0, 0);
             this.codeRichTextBox.Name = "codeRichTextBox";
@@ -59,7 +59,10 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.cutToolStripMenuItem, this.copyToolStripMenuItem, this.pasteToolStripMenuItem });
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cutToolStripMenuItem,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.contextMenuStrip1.Size = new System.Drawing.Size(103, 70);
@@ -111,6 +114,7 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
